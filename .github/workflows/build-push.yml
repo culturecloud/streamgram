@@ -2,21 +2,6 @@ name: Build-Push to Docker Hub
 on:
   push:
   workflow_dispatch:
-    inputs:
-      dockerfile:
-        description: Dockerfile path
-        required: true
-        default: ./Dockerfile
-      image:
-        description: Image name
-        required: true
-        default: culturecloud/streamgram
-      tag:
-        description: Image tag
-        required: true
-        default: latest
-env:
-  IMAGE: ${{ inputs.image }}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -37,8 +22,7 @@ jobs:
         uses: docker/build-push-action@v4.0.0
         with:
           context: ./
-          file: ${{ inputs.dockerfile }}
+          file: ./Dockerfile
           platforms: linux/amd64
           push: true
-          tags: |
-            ${{ inputs.image }}:${{ inputs.tag }}
+          tags: culturecloud/streamgram:latest
